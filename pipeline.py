@@ -6,8 +6,19 @@ Baobei 2.0 conformer pipeline
   sp       : r2SCAN-3c single points on every CREST conformer inside sp_window
   opt      : pool all variants of a species, rank by SP energy, Opt+Freq the best
   hl       : high-level single points (second functional) on optimized geometries
-  analyze  : ensemble free energies, binding free energies, selectivity
+  extras   : C4 descriptors: counterpoise interaction energy and oxidation potential
+  analyze  : ensemble free energies, binding, selectivity gap (C1), C2/C3 ranking table
   all      : run every stage in order
+
+Hypotheses this tests (see "Thesis v2 hypotheses"):
+  C1  selectivity gap > 0 for at least one monomer, in implicit water
+  C2  binding free energy predicts sensor performance in rank order
+  C3  or the relationship is a volcano: a middle binding strength wins
+  C4  other DFT descriptors beat binding energy alone
+
+C2 and C3 need several monomers and sensor data; this script produces the
+computational column (results/ranking.csv) that you later correlate against
+measured imprinting factors.
 
 Every stage is resumable: finished jobs (ORCA TERMINATED NORMALLY / CREST output
 present) are skipped, so you can stop, add compute, and rerun.
@@ -168,6 +179,45 @@ def stage_opt(cfg):
                      "conf.xyz", v)
 
 
+def stage_extras(cfg):
+    """C4 descriptors on the lowest-G conformer of each complex and monomer."""
+    for sp, spec in cfg["species"].items():
+        best = None
+        for var in spec["variants"]:
+            for d in sorted((WORK / sp / var / "opt").glob("c*")):
+                if not orca_done(d / "opt.out") or has_imaginary(d / "opt.out"):
+                    continue
+                g = final_energy(d / "opt.out") + g_minus_eel(d / "opt.out")
+                if best is None or g < best[0]:
+                    best = (g, var, d)
+        if best is None:
+            continue
+        _, var, d = best
+        v = spec["variants"][var]
+        # oxidation potential: vertical radical cation at the neutral geometry (C4)
+        if spec.get("oxidation"):
+            wd = WORK / sp / var / "extras" / "cation"
+            wd.mkdir(parents=True, exist_ok=True)
+            shutil.copy(d / "opt.xyz", wd / "geom.xyz")
+            vc = {"charge": v["charge"] + 1, "mult": v["mult"] + 1}
+            orca_job(cfg, wd, "cation", cfg["methods"]["high"], "geom.xyz", vc)
+        # counterpoise-corrected interaction energy (C4 energy decomposition input)
+        if spec.get("fragments"):
+            wd = WORK / sp / var / "extras" / "cp"
+            wd.mkdir(parents=True, exist_ok=True)
+            shutil.copy(d / "opt.xyz", wd / "geom.xyz")
+            out = wd / "cp.out"
+            if not orca_done(out):
+                inp = (f"! {cfg['methods']['high']} CPCM({cfg['solvent_orca']}) "
+                       f"TightSCF LED\n"
+                       f"%pal nprocs {cfg['nprocs']} end\n%maxcore {cfg['maxcore']}\n"
+                       f"%method frag true end\n"
+                       f"* xyzfile {v['charge']} {v['mult']} geom.xyz\n")
+                (wd / "cp.inp").write_text(inp)
+                print(f"  ORCA cp: {wd}  (needs fragment labels in geom.xyz)")
+                run([cfg["orca"], "cp.inp"], wd, "cp.out")
+
+
 def stage_hl(cfg):
     for sp, spec, var, v in variants(cfg):
         for d in sorted((WORK / sp / var / "opt").glob("c*")):
@@ -221,6 +271,50 @@ def species_ensemble(cfg, sp, spec, level):
     return gmin - RT * math.log(Z), uniq
 
 
+def write_ranking(cfg, dGb):
+    """One row per monomer: the computational side of C2 and C3.
+
+    Fill measured_IF by hand once sensor data exists, then correlate.
+    A monotonic fit supports C2; a peak in the middle supports C3.
+    """
+    rows = []
+    for m in cfg.get("monomers", []):
+        hist, hisd = f"{m} histamine", f"{m} histidine"
+        if hist not in dGb:
+            continue
+        gap = dGb[hist] - dGb[hisd] if hisd in dGb else None
+        ox = oxidation_potential(cfg, f"{m}_histamine_1to1")
+        rows.append([m, f"{dGb[hist]:.2f}",
+                     "" if gap is None else f"{gap:.2f}",
+                     "" if ox is None else f"{ox:.2f}", ""])
+    if not rows:
+        return
+    with open(RESULTS / "ranking.csv", "w", newline="") as f:
+        w = csv.writer(f)
+        w.writerow(["monomer", "dG_bind_histamine_kcal", "selectivity_gap_kcal",
+                    "oxidation_potential_V_vs_SHE", "measured_IF"])
+        w.writerows(rows)
+    print(f"[analyze] wrote {RESULTS}/ranking.csv (C2/C3 table, measured_IF blank)")
+
+
+def oxidation_potential(cfg, sp):
+    """Vertical oxidation potential vs SHE, from the neutral and cation energies."""
+    spec = cfg["species"].get(sp)
+    if not spec:
+        return None
+    for var in spec["variants"]:
+        cat = WORK / sp / var / "extras" / "cation" / "cation.out"
+        neu = WORK / sp / var / "hl"
+        if not orca_done(cat):
+            continue
+        geoms = [d / "hl.out" for d in sorted(neu.glob("c*")) if orca_done(d / "hl.out")]
+        if not geoms:
+            continue
+        e_n = min(final_energy(g) for g in geoms)
+        return (final_energy(cat) - e_n) * 27.2114 - cfg.get("she_ref_V", 4.28)
+    return None
+
+
 def stage_analyze(cfg):
     RESULTS.mkdir(exist_ok=True)
     T = cfg["temperature"]
@@ -253,8 +347,10 @@ def stage_analyze(cfg):
         for a, bname in cfg["selectivity"]:
             if a in dGb and bname in dGb:
                 ddg = dGb[a] - dGb[bname]
-                summary.append([level, "selectivity", f"{a} vs {bname}",
+                summary.append([level, "selectivity gap (C1)", f"{a} vs {bname}",
                                 f"{ddg:.2f}", f"{math.exp(-ddg / RT):.2f}"])
+        if level == "high":
+            write_ranking(cfg, dGb)
     with open(RESULTS / "summary.csv", "w", newline="") as f:
         w = csv.writer(f)
         w.writerow(["level", "type", "name", "dG_kcal_1M", "K_ratio"])
@@ -265,7 +361,7 @@ def stage_analyze(cfg):
 
 
 STAGES = {"crest": stage_crest, "sp": stage_sp, "opt": stage_opt,
-          "hl": stage_hl, "analyze": stage_analyze}
+          "hl": stage_hl, "extras": stage_extras, "analyze": stage_analyze}
 
 if __name__ == "__main__":
     if len(sys.argv) < 2 or sys.argv[1] not in [*STAGES, "all"]:

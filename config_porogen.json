@@ -1,0 +1,720 @@
+{
+  "crest": "crest",
+  "orca": "/opt/orca/orca",
+  "nprocs": 8,
+  "maxcore": 3000,
+  "temperature": 298.15,
+  "solvent_xtb": "acetonitrile",
+  "solvent_orca": "acetonitrile",
+  "she_ref_V": 4.28,
+  "crest_ewin": 10.0,
+  "sp_window": 10.0,
+  "opt_window": 4.0,
+  "opt_max": 30,
+  "dedupe_kcal": 0.05,
+  "methods": {
+    "screen": "r2SCAN-3c",
+    "high": "wB97M-V def2-TZVP def2/J RIJCOSX"
+  },
+  "monomers": [
+    "MAA",
+    "AA",
+    "IA",
+    "AM",
+    "4VP",
+    "2VP",
+    "AMPS",
+    "HEMA"
+  ],
+  "species": {
+    "MAA": {
+      "nci": false,
+      "note": "methacrylic acid",
+      "oxidation": true,
+      "variants": {
+        "neutral": {
+          "xyz": "inputs/MAA/neutral.xyz",
+          "charge": 0,
+          "mult": 1
+        }
+      }
+    },
+    "AA": {
+      "nci": false,
+      "note": "acrylic acid",
+      "oxidation": true,
+      "variants": {
+        "neutral": {
+          "xyz": "inputs/AA/neutral.xyz",
+          "charge": 0,
+          "mult": 1
+        }
+      }
+    },
+    "IA": {
+      "nci": false,
+      "note": "itaconic acid",
+      "oxidation": true,
+      "variants": {
+        "neutral": {
+          "xyz": "inputs/IA/neutral.xyz",
+          "charge": 0,
+          "mult": 1
+        }
+      }
+    },
+    "AM": {
+      "nci": false,
+      "note": "acrylamide",
+      "oxidation": true,
+      "variants": {
+        "neutral": {
+          "xyz": "inputs/AM/neutral.xyz",
+          "charge": 0,
+          "mult": 1
+        }
+      }
+    },
+    "4VP": {
+      "nci": false,
+      "note": "4-vinylpyridine",
+      "oxidation": true,
+      "variants": {
+        "neutral": {
+          "xyz": "inputs/4VP/neutral.xyz",
+          "charge": 0,
+          "mult": 1
+        }
+      }
+    },
+    "2VP": {
+      "nci": false,
+      "note": "2-vinylpyridine",
+      "oxidation": true,
+      "variants": {
+        "neutral": {
+          "xyz": "inputs/2VP/neutral.xyz",
+          "charge": 0,
+          "mult": 1
+        }
+      }
+    },
+    "AMPS": {
+      "nci": false,
+      "note": "2-acrylamido-2-methylpropanesulfonic acid",
+      "oxidation": true,
+      "variants": {
+        "neutral": {
+          "xyz": "inputs/AMPS/neutral.xyz",
+          "charge": 0,
+          "mult": 1
+        }
+      }
+    },
+    "HEMA": {
+      "nci": false,
+      "note": "2-hydroxyethyl methacrylate",
+      "oxidation": true,
+      "variants": {
+        "neutral": {
+          "xyz": "inputs/HEMA/neutral.xyz",
+          "charge": 0,
+          "mult": 1
+        }
+      }
+    },
+    "histamine": {
+      "nci": false,
+      "oxidation": true,
+      "variants": {
+        "neutral_tau": {
+          "xyz": "inputs/histamine/neutral_tau.xyz",
+          "charge": 0,
+          "mult": 1
+        },
+        "neutral_pi": {
+          "xyz": "inputs/histamine/neutral_pi.xyz",
+          "charge": 0,
+          "mult": 1
+        },
+        "cation": {
+          "xyz": "inputs/histamine/cation.xyz",
+          "charge": 1,
+          "mult": 1
+        }
+      }
+    },
+    "histidine": {
+      "nci": false,
+      "oxidation": false,
+      "variants": {
+        "zwitterion": {
+          "xyz": "inputs/histidine/zwitterion.xyz",
+          "charge": 0,
+          "mult": 1
+        },
+        "cation": {
+          "xyz": "inputs/histidine/cation.xyz",
+          "charge": 1,
+          "mult": 1
+        }
+      }
+    },
+    "MAA_histamine_1to1": {
+      "nci": true,
+      "fragments": true,
+      "oxidation": true,
+      "variants": {
+        "hbond_neutral_tau": {
+          "xyz": "inputs/MAA_histamine_1to1/hbond_neutral_tau.xyz",
+          "charge": 0,
+          "mult": 1
+        },
+        "hbond_neutral_pi": {
+          "xyz": "inputs/MAA_histamine_1to1/hbond_neutral_pi.xyz",
+          "charge": 0,
+          "mult": 1
+        },
+        "hbond_cation": {
+          "xyz": "inputs/MAA_histamine_1to1/hbond_cation.xyz",
+          "charge": 1,
+          "mult": 1
+        },
+        "ionpair": {
+          "xyz": "inputs/MAA_histamine_1to1/ionpair.xyz",
+          "charge": 0,
+          "mult": 1
+        }
+      }
+    },
+    "MAA_histidine_1to1": {
+      "nci": true,
+      "fragments": true,
+      "oxidation": false,
+      "variants": {
+        "hbond_zwitterion": {
+          "xyz": "inputs/MAA_histidine_1to1/hbond_zwitterion.xyz",
+          "charge": 0,
+          "mult": 1
+        },
+        "hbond_cation": {
+          "xyz": "inputs/MAA_histidine_1to1/hbond_cation.xyz",
+          "charge": 1,
+          "mult": 1
+        },
+        "ionpair": {
+          "xyz": "inputs/MAA_histidine_1to1/ionpair.xyz",
+          "charge": 0,
+          "mult": 1
+        }
+      }
+    },
+    "AA_histamine_1to1": {
+      "nci": true,
+      "fragments": true,
+      "oxidation": true,
+      "variants": {
+        "hbond_neutral_tau": {
+          "xyz": "inputs/AA_histamine_1to1/hbond_neutral_tau.xyz",
+          "charge": 0,
+          "mult": 1
+        },
+        "hbond_neutral_pi": {
+          "xyz": "inputs/AA_histamine_1to1/hbond_neutral_pi.xyz",
+          "charge": 0,
+          "mult": 1
+        },
+        "hbond_cation": {
+          "xyz": "inputs/AA_histamine_1to1/hbond_cation.xyz",
+          "charge": 1,
+          "mult": 1
+        },
+        "ionpair": {
+          "xyz": "inputs/AA_histamine_1to1/ionpair.xyz",
+          "charge": 0,
+          "mult": 1
+        }
+      }
+    },
+    "AA_histidine_1to1": {
+      "nci": true,
+      "fragments": true,
+      "oxidation": false,
+      "variants": {
+        "hbond_zwitterion": {
+          "xyz": "inputs/AA_histidine_1to1/hbond_zwitterion.xyz",
+          "charge": 0,
+          "mult": 1
+        },
+        "hbond_cation": {
+          "xyz": "inputs/AA_histidine_1to1/hbond_cation.xyz",
+          "charge": 1,
+          "mult": 1
+        },
+        "ionpair": {
+          "xyz": "inputs/AA_histidine_1to1/ionpair.xyz",
+          "charge": 0,
+          "mult": 1
+        }
+      }
+    },
+    "IA_histamine_1to1": {
+      "nci": true,
+      "fragments": true,
+      "oxidation": true,
+      "variants": {
+        "hbond_neutral_tau": {
+          "xyz": "inputs/IA_histamine_1to1/hbond_neutral_tau.xyz",
+          "charge": 0,
+          "mult": 1
+        },
+        "hbond_neutral_pi": {
+          "xyz": "inputs/IA_histamine_1to1/hbond_neutral_pi.xyz",
+          "charge": 0,
+          "mult": 1
+        },
+        "hbond_cation": {
+          "xyz": "inputs/IA_histamine_1to1/hbond_cation.xyz",
+          "charge": 1,
+          "mult": 1
+        },
+        "ionpair": {
+          "xyz": "inputs/IA_histamine_1to1/ionpair.xyz",
+          "charge": 0,
+          "mult": 1
+        }
+      }
+    },
+    "IA_histidine_1to1": {
+      "nci": true,
+      "fragments": true,
+      "oxidation": false,
+      "variants": {
+        "hbond_zwitterion": {
+          "xyz": "inputs/IA_histidine_1to1/hbond_zwitterion.xyz",
+          "charge": 0,
+          "mult": 1
+        },
+        "hbond_cation": {
+          "xyz": "inputs/IA_histidine_1to1/hbond_cation.xyz",
+          "charge": 1,
+          "mult": 1
+        },
+        "ionpair": {
+          "xyz": "inputs/IA_histidine_1to1/ionpair.xyz",
+          "charge": 0,
+          "mult": 1
+        }
+      }
+    },
+    "AM_histamine_1to1": {
+      "nci": true,
+      "fragments": true,
+      "oxidation": true,
+      "variants": {
+        "hbond_neutral_tau": {
+          "xyz": "inputs/AM_histamine_1to1/hbond_neutral_tau.xyz",
+          "charge": 0,
+          "mult": 1
+        },
+        "hbond_neutral_pi": {
+          "xyz": "inputs/AM_histamine_1to1/hbond_neutral_pi.xyz",
+          "charge": 0,
+          "mult": 1
+        },
+        "hbond_cation": {
+          "xyz": "inputs/AM_histamine_1to1/hbond_cation.xyz",
+          "charge": 1,
+          "mult": 1
+        },
+        "ionpair": {
+          "xyz": "inputs/AM_histamine_1to1/ionpair.xyz",
+          "charge": 0,
+          "mult": 1
+        }
+      }
+    },
+    "AM_histidine_1to1": {
+      "nci": true,
+      "fragments": true,
+      "oxidation": false,
+      "variants": {
+        "hbond_zwitterion": {
+          "xyz": "inputs/AM_histidine_1to1/hbond_zwitterion.xyz",
+          "charge": 0,
+          "mult": 1
+        },
+        "hbond_cation": {
+          "xyz": "inputs/AM_histidine_1to1/hbond_cation.xyz",
+          "charge": 1,
+          "mult": 1
+        },
+        "ionpair": {
+          "xyz": "inputs/AM_histidine_1to1/ionpair.xyz",
+          "charge": 0,
+          "mult": 1
+        }
+      }
+    },
+    "4VP_histamine_1to1": {
+      "nci": true,
+      "fragments": true,
+      "oxidation": true,
+      "variants": {
+        "hbond_neutral_tau": {
+          "xyz": "inputs/4VP_histamine_1to1/hbond_neutral_tau.xyz",
+          "charge": 0,
+          "mult": 1
+        },
+        "hbond_neutral_pi": {
+          "xyz": "inputs/4VP_histamine_1to1/hbond_neutral_pi.xyz",
+          "charge": 0,
+          "mult": 1
+        },
+        "hbond_cation": {
+          "xyz": "inputs/4VP_histamine_1to1/hbond_cation.xyz",
+          "charge": 1,
+          "mult": 1
+        },
+        "ionpair": {
+          "xyz": "inputs/4VP_histamine_1to1/ionpair.xyz",
+          "charge": 0,
+          "mult": 1
+        }
+      }
+    },
+    "4VP_histidine_1to1": {
+      "nci": true,
+      "fragments": true,
+      "oxidation": false,
+      "variants": {
+        "hbond_zwitterion": {
+          "xyz": "inputs/4VP_histidine_1to1/hbond_zwitterion.xyz",
+          "charge": 0,
+          "mult": 1
+        },
+        "hbond_cation": {
+          "xyz": "inputs/4VP_histidine_1to1/hbond_cation.xyz",
+          "charge": 1,
+          "mult": 1
+        },
+        "ionpair": {
+          "xyz": "inputs/4VP_histidine_1to1/ionpair.xyz",
+          "charge": 0,
+          "mult": 1
+        }
+      }
+    },
+    "2VP_histamine_1to1": {
+      "nci": true,
+      "fragments": true,
+      "oxidation": true,
+      "variants": {
+        "hbond_neutral_tau": {
+          "xyz": "inputs/2VP_histamine_1to1/hbond_neutral_tau.xyz",
+          "charge": 0,
+          "mult": 1
+        },
+        "hbond_neutral_pi": {
+          "xyz": "inputs/2VP_histamine_1to1/hbond_neutral_pi.xyz",
+          "charge": 0,
+          "mult": 1
+        },
+        "hbond_cation": {
+          "xyz": "inputs/2VP_histamine_1to1/hbond_cation.xyz",
+          "charge": 1,
+          "mult": 1
+        },
+        "ionpair": {
+          "xyz": "inputs/2VP_histamine_1to1/ionpair.xyz",
+          "charge": 0,
+          "mult": 1
+        }
+      }
+    },
+    "2VP_histidine_1to1": {
+      "nci": true,
+      "fragments": true,
+      "oxidation": false,
+      "variants": {
+        "hbond_zwitterion": {
+          "xyz": "inputs/2VP_histidine_1to1/hbond_zwitterion.xyz",
+          "charge": 0,
+          "mult": 1
+        },
+        "hbond_cation": {
+          "xyz": "inputs/2VP_histidine_1to1/hbond_cation.xyz",
+          "charge": 1,
+          "mult": 1
+        },
+        "ionpair": {
+          "xyz": "inputs/2VP_histidine_1to1/ionpair.xyz",
+          "charge": 0,
+          "mult": 1
+        }
+      }
+    },
+    "AMPS_histamine_1to1": {
+      "nci": true,
+      "fragments": true,
+      "oxidation": true,
+      "variants": {
+        "hbond_neutral_tau": {
+          "xyz": "inputs/AMPS_histamine_1to1/hbond_neutral_tau.xyz",
+          "charge": 0,
+          "mult": 1
+        },
+        "hbond_neutral_pi": {
+          "xyz": "inputs/AMPS_histamine_1to1/hbond_neutral_pi.xyz",
+          "charge": 0,
+          "mult": 1
+        },
+        "hbond_cation": {
+          "xyz": "inputs/AMPS_histamine_1to1/hbond_cation.xyz",
+          "charge": 1,
+          "mult": 1
+        },
+        "ionpair": {
+          "xyz": "inputs/AMPS_histamine_1to1/ionpair.xyz",
+          "charge": 0,
+          "mult": 1
+        }
+      }
+    },
+    "AMPS_histidine_1to1": {
+      "nci": true,
+      "fragments": true,
+      "oxidation": false,
+      "variants": {
+        "hbond_zwitterion": {
+          "xyz": "inputs/AMPS_histidine_1to1/hbond_zwitterion.xyz",
+          "charge": 0,
+          "mult": 1
+        },
+        "hbond_cation": {
+          "xyz": "inputs/AMPS_histidine_1to1/hbond_cation.xyz",
+          "charge": 1,
+          "mult": 1
+        },
+        "ionpair": {
+          "xyz": "inputs/AMPS_histidine_1to1/ionpair.xyz",
+          "charge": 0,
+          "mult": 1
+        }
+      }
+    },
+    "HEMA_histamine_1to1": {
+      "nci": true,
+      "fragments": true,
+      "oxidation": true,
+      "variants": {
+        "hbond_neutral_tau": {
+          "xyz": "inputs/HEMA_histamine_1to1/hbond_neutral_tau.xyz",
+          "charge": 0,
+          "mult": 1
+        },
+        "hbond_neutral_pi": {
+          "xyz": "inputs/HEMA_histamine_1to1/hbond_neutral_pi.xyz",
+          "charge": 0,
+          "mult": 1
+        },
+        "hbond_cation": {
+          "xyz": "inputs/HEMA_histamine_1to1/hbond_cation.xyz",
+          "charge": 1,
+          "mult": 1
+        },
+        "ionpair": {
+          "xyz": "inputs/HEMA_histamine_1to1/ionpair.xyz",
+          "charge": 0,
+          "mult": 1
+        }
+      }
+    },
+    "HEMA_histidine_1to1": {
+      "nci": true,
+      "fragments": true,
+      "oxidation": false,
+      "variants": {
+        "hbond_zwitterion": {
+          "xyz": "inputs/HEMA_histidine_1to1/hbond_zwitterion.xyz",
+          "charge": 0,
+          "mult": 1
+        },
+        "hbond_cation": {
+          "xyz": "inputs/HEMA_histidine_1to1/hbond_cation.xyz",
+          "charge": 1,
+          "mult": 1
+        },
+        "ionpair": {
+          "xyz": "inputs/HEMA_histidine_1to1/ionpair.xyz",
+          "charge": 0,
+          "mult": 1
+        }
+      }
+    }
+  },
+  "bindings": [
+    {
+      "name": "MAA histamine",
+      "complex": "MAA_histamine_1to1",
+      "parts": {
+        "histamine": 1,
+        "MAA": 1
+      }
+    },
+    {
+      "name": "MAA histidine",
+      "complex": "MAA_histidine_1to1",
+      "parts": {
+        "histidine": 1,
+        "MAA": 1
+      }
+    },
+    {
+      "name": "AA histamine",
+      "complex": "AA_histamine_1to1",
+      "parts": {
+        "histamine": 1,
+        "AA": 1
+      }
+    },
+    {
+      "name": "AA histidine",
+      "complex": "AA_histidine_1to1",
+      "parts": {
+        "histidine": 1,
+        "AA": 1
+      }
+    },
+    {
+      "name": "IA histamine",
+      "complex": "IA_histamine_1to1",
+      "parts": {
+        "histamine": 1,
+        "IA": 1
+      }
+    },
+    {
+      "name": "IA histidine",
+      "complex": "IA_histidine_1to1",
+      "parts": {
+        "histidine": 1,
+        "IA": 1
+      }
+    },
+    {
+      "name": "AM histamine",
+      "complex": "AM_histamine_1to1",
+      "parts": {
+        "histamine": 1,
+        "AM": 1
+      }
+    },
+    {
+      "name": "AM histidine",
+      "complex": "AM_histidine_1to1",
+      "parts": {
+        "histidine": 1,
+        "AM": 1
+      }
+    },
+    {
+      "name": "4VP histamine",
+      "complex": "4VP_histamine_1to1",
+      "parts": {
+        "histamine": 1,
+        "4VP": 1
+      }
+    },
+    {
+      "name": "4VP histidine",
+      "complex": "4VP_histidine_1to1",
+      "parts": {
+        "histidine": 1,
+        "4VP": 1
+      }
+    },
+    {
+      "name": "2VP histamine",
+      "complex": "2VP_histamine_1to1",
+      "parts": {
+        "histamine": 1,
+        "2VP": 1
+      }
+    },
+    {
+      "name": "2VP histidine",
+      "complex": "2VP_histidine_1to1",
+      "parts": {
+        "histidine": 1,
+        "2VP": 1
+      }
+    },
+    {
+      "name": "AMPS histamine",
+      "complex": "AMPS_histamine_1to1",
+      "parts": {
+        "histamine": 1,
+        "AMPS": 1
+      }
+    },
+    {
+      "name": "AMPS histidine",
+      "complex": "AMPS_histidine_1to1",
+      "parts": {
+        "histidine": 1,
+        "AMPS": 1
+      }
+    },
+    {
+      "name": "HEMA histamine",
+      "complex": "HEMA_histamine_1to1",
+      "parts": {
+        "histamine": 1,
+        "HEMA": 1
+      }
+    },
+    {
+      "name": "HEMA histidine",
+      "complex": "HEMA_histidine_1to1",
+      "parts": {
+        "histidine": 1,
+        "HEMA": 1
+      }
+    }
+  ],
+  "selectivity": [
+    [
+      "MAA histamine",
+      "MAA histidine"
+    ],
+    [
+      "AA histamine",
+      "AA histidine"
+    ],
+    [
+      "IA histamine",
+      "IA histidine"
+    ],
+    [
+      "AM histamine",
+      "AM histidine"
+    ],
+    [
+      "4VP histamine",
+      "4VP histidine"
+    ],
+    [
+      "2VP histamine",
+      "2VP histidine"
+    ],
+    [
+      "AMPS histamine",
+      "AMPS histidine"
+    ],
+    [
+      "HEMA histamine",
+      "HEMA histidine"
+    ]
+  ]
+}
