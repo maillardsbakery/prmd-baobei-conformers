@@ -1,0 +1,28 @@
+#!/usr/bin/env python3
+"""Fake sbatch for testing `pipeline.py --slurm`.
+
+Records each array job under $FAKE_SLURM_STATE (default ./.fake_slurm) and
+prints a job id, like `sbatch --parsable`. Tasks stay pending (fake squeue
+lists them) until fake-slurm-drain runs them, or immediately if
+FAKE_SBATCH_RUN=1.
+"""
+import json
+import os
+import re
+import subprocess
+import sys
+from pathlib import Path
+
+state = Path(os.environ.get("FAKE_SLURM_STATE", ".fake_slurm"))
+state.mkdir(parents=True, exist_ok=True)
+script = Path([a for a in sys.argv[1:] if not a.startswith("-")][-1]).resolve()
+m = re.search(r"^#SBATCH --array=1-(\d+)", script.read_text(), re.M)
+ntasks = int(m.group(1)) if m else 1
+counter = state / "counter"
+jobid = int(counter.read_text()) + 1 if counter.exists() else 1000
+counter.write_text(str(jobid))
+(state / f"{jobid}.json").write_text(json.dumps(
+    {"script": str(script), "pending": list(range(1, ntasks + 1))}))
+if os.environ.get("FAKE_SBATCH_RUN") == "1":
+    subprocess.run([str(Path(__file__).with_name("fake-slurm-drain"))], check=True)
+print(jobid)

@@ -1,0 +1,113 @@
+#!/usr/bin/env python3
+"""Fake ORCA 6 for dry runs of pipeline.py.
+
+Usage like the real one: `orca job.inp > job.out`. Picks the matching
+hand-made ORCA 6 output under tests/fixtures/orca6/, splices in this job's
+input and a made-up but deterministic energy, and prints it. Opt jobs also
+write <job>.xyz like ORCA does.
+
+Energy model (only so the analysis has sane numbers to chew on): a sum of
+per-atom energies, a solvation-like term per unit charge, an ionisation term
+for open shells, 0-4 kcal/mol of conformer noise from the coordinates, and for
+*_1to1 complexes (read from the working directory) an interaction energy of
+-3 to -14 kcal/mol. Roughly one geometry in 13 gets an imaginary mode.
+
+FAKE_ORCA_FAIL=<substring>: jobs whose working directory contains it print
+the SCF-failure fixture and exit 1. FAKE_ORCA_KILL=<substring>: print the
+truncated fixture and exit 137, as if the job were killed.
+"""
+import hashlib
+import os
+import re
+import sys
+from pathlib import Path
+
+FIX = Path(__file__).resolve().parent.parent / "fixtures" / "orca6"
+H2KCAL = 627.509474
+ATOM_E = {"H": -0.500, "C": -37.84, "N": -54.58, "O": -75.06, "S": -398.10}
+
+
+def unit(text):
+    """Deterministic number in [0, 1) from a string."""
+    return int(hashlib.sha1(text.encode()).hexdigest()[:8], 16) / 0x100000000
+
+
+def species_from_cwd():
+    parts = Path.cwd().parts
+    if "work" not in parts:
+        return ""
+    return parts[len(parts) - parts[::-1].index("work")]
+
+
+def splice_input(text, inp_name, inp_lines):
+    echo = "".join(f"|{k:3d}> {l}\n" for k, l in enumerate(inp_lines, 1))
+    echo += f"|{len(inp_lines) + 1:3d}> \n|{len(inp_lines) + 2:3d}>" \
+            "                          ****END OF INPUT****"
+    return re.sub(r"NAME = \S+\n.*?\*\*\*\*END OF INPUT\*\*\*\*",
+                  lambda m: f"NAME = {inp_name}\n{echo}", text, flags=re.S)
+
+
+def main():
+    if len(sys.argv) < 2:
+        print("usage: orca input.inp", file=sys.stderr)
+        return 1
+    inp = Path(sys.argv[1])
+    lines = inp.read_text().splitlines()
+    kw = " ".join(l[1:] for l in lines if l.startswith("!"))
+    star = next(l for l in lines if l.lstrip().startswith("* xyzfile")).split()
+    charge, mult, xyzname = int(star[2]), int(star[3]), star[4]
+    xyz = Path(xyzname).read_text().splitlines()
+    n = int(xyz[0].split()[0])
+    atoms = [l.split()[:4] for l in xyz[2:2 + n]]
+
+    cwd = os.getcwd()
+    if os.environ.get("FAKE_ORCA_FAIL") and os.environ["FAKE_ORCA_FAIL"] in cwd:
+        print(splice_input((FIX / "sp_scf_failed.out").read_text(), inp.name, lines))
+        return 1
+    if os.environ.get("FAKE_ORCA_KILL") and os.environ["FAKE_ORCA_KILL"] in cwd:
+        sys.stdout.write(splice_input((FIX / "sp_truncated.out").read_text(), inp.name, lines))
+        return 137
+
+    high = "wB97M-V" in kw
+    geom = "".join(f"{a[0]}{float(a[1]):.2f}{float(a[2]):.2f}{float(a[3]):.2f}" for a in atoms)
+    e = sum(ATOM_E.get(a[0].capitalize(), -50.0) for a in atoms)
+    e += (-0.0004 * n) if high else 0.0
+    sp = species_from_cwd()
+    e += 0.07 * charge + ((0.21 + 0.04 * unit("ip" + sp)) if mult % 2 == 0 else 0.0)
+    e += 4.0 * unit(geom) / H2KCAL
+    if "_1to1" in sp:
+        e += -(3.0 + 11.0 * unit(sp)) * (1.1 if high else 1.0) / H2KCAL
+    g_corr = 0.00556 * n + (0.0115 if "_1to1" in sp else 0.0)
+
+    if "Opt" in kw.split():
+        imag = unit("imag" + geom) < 1 / 13
+        text = (FIX / ("opt_freq_imaginary.out" if imag else "opt_freq_r2scan3c.out")).read_text()
+        hits = list(re.finditer(r"FINAL SINGLE POINT ENERGY\s+(-?\d+\.\d+)", text))
+        values = [e + 0.0009 * (len(hits) - 1 - i) for i in range(len(hits))]
+        values[-1] = e
+        for m, val in zip(reversed(hits), reversed(values)):
+            text = text[:m.start(1)] + f"{val:.12f}" + text[m.end(1):]
+        text = re.sub(r"(Electronic energy\s+\.\.\.\s+)(-?\d+\.\d+)",
+                      lambda m: f"{m.group(1)}{e:.8f}", text)
+        text = re.sub(r"(Final Gibbs free energy\s+\.\.\.\s+)(-?\d+\.\d+)",
+                      lambda m: f"{m.group(1)}{e + g_corr:.8f}", text)
+        text = re.sub(r"(G-E\(el\)\s+\.\.\.\s+)(-?\d+\.\d+)",
+                      lambda m: f"{m.group(1)}{g_corr:.8f}", text)
+        body = "\n".join(xyz[2:2 + n])
+        Path(inp.with_suffix(".xyz").name).write_text(
+            f"{n}\nCoordinates from ORCA-job {inp.stem} E {e:.12f}\n{body}\n")
+    else:
+        name = ("cation_wb97mv.out" if mult % 2 == 0 else "hl_wb97mv.out") if high \
+            else "sp_r2scan3c.out"
+        text = (FIX / name).read_text()
+        text = re.sub(r"(FINAL SINGLE POINT ENERGY\s+)(-?\d+\.\d+)",
+                      lambda m: f"{m.group(1)}{e:.12f}", text)
+        if "LED" in kw.split():
+            text = text.replace("ORCA property calculations",
+                                "ORCA property calculations [FAKE: no LED output]")
+    print(splice_input(text, inp.name, lines))
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

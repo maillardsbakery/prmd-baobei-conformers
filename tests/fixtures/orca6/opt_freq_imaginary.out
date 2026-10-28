@@ -1,0 +1,480 @@
+
+                                 *****************
+                                 * O   R   C   A *
+                                 *****************
+
+                  #######################################################
+                  #                        -***-                        #
+                  #          Department of theory and spectroscopy      #
+                  #                                                     #
+                  #                      Frank Neese                    #
+                  #                                                     #
+                  #        Max Planck Institute fuer Kohlenforschung    #
+                  #                Kaiser Wilhelm Platz 1               #
+                  #                 D-45470 Muelheim/Ruhr               #
+                  #                      Germany                        #
+                  #                                                     #
+                  #                  All rights reserved                #
+                  #                        -***-                        #
+                  #######################################################
+
+
+                         Program Version 6.0.1 -  RELEASE  -
+
+
+ [HAND-MADE FIXTURE: abbreviated ORCA 6 Opt+Freq. Sections not read by
+  pipeline.py are shortened. See tests/fixtures/README.md.]
+
+================================================================================
+                                       INPUT FILE
+================================================================================
+NAME = opt.inp
+|  1> ! r2SCAN-3c Opt Freq CPCM(water) TightSCF
+|  2> %pal nprocs 8 end
+|  3> %maxcore 3000
+|  4> * xyzfile 0 1 conf.xyz
+|  5>
+|  6>                          ****END OF INPUT****
+================================================================================
+
+                       *****************************
+                       * Geometry Optimization Run *
+                       *****************************
+
+Geometry optimization settings:
+Update method            Update   .... BFGS
+Choice of coordinates    CoordSys .... Redundant Internals (RIC)
+Initial Hessian          InHess   .... Almoef's Model
+
+Convergence Tolerances:
+Energy Change            TolE     ....  5.0000e-06 Eh
+Max. Gradient            TolMAXG  ....  3.0000e-04 Eh/bohr
+RMS Gradient             TolRMSG  ....  1.0000e-04 Eh/bohr
+Max. Displacement        TolMAXD  ....  4.0000e-03 bohr
+RMS Displacement         TolRMSD  ....  2.0000e-03 bohr
+Strict Convergence                ....  False
+
+                         *************************************************************
+                         *                GEOMETRY OPTIMIZATION CYCLE   1            *
+                         *************************************************************
+
+---------------------------------
+CARTESIAN COORDINATES (ANGSTROEM)
+---------------------------------
+  C     -0.781277    0.127126    0.000113
+  C     -1.367210    1.322297    0.000057
+  C     -1.514038   -1.175010   -0.000144
+  C      0.700037    0.066876    0.000171
+  O      1.430055    1.042541   -0.000201
+  O      1.179345   -1.169207    0.000108
+  H      2.155159   -1.187785   -0.000525
+  H     -2.436975    1.430270   -0.000599
+  H     -0.772793    2.220332    0.000760
+  H     -2.585705   -1.004974   -0.000671
+  H     -1.239588   -1.756875    0.877297
+  H     -1.238697   -1.757187   -0.877130
+
+--------------
+SCF ITERATIONS
+--------------
+  ITER       Energy         Delta-E        Max-DP      RMS-DP      [F,P]     Damp
+    0   -306.3877213994   0.000000000000 0.00241210  0.00005124  0.0031412 0.7000
+    1   -306.3880113994  -0.000290000000 0.00042110  0.00000924  0.0004121 0.0000
+    2   -306.3880213994  -0.000010000000 0.00002110  0.00000044  0.0000201 0.0000
+
+               *****************************************************
+               *                     SUCCESS                       *
+               *           SCF CONVERGED AFTER   6 CYCLES          *
+               *****************************************************
+
+----------------
+TOTAL SCF ENERGY
+----------------
+
+Total Energy       :         -306.38802140 Eh           -8337.24272 eV
+CPCM Dielectric    :           -0.01102291 Eh              -0.29995 eV
+
+-------
+DFT-D4
+-------
+Dispersion correction           -0.004810227
+gCP correction             0.004701109
+
+-------------------------   --------------------
+FINAL SINGLE POINT ENERGY      -306.388130517431
+-------------------------   --------------------
+
+                            .--------------------.
+          ----------------------|Geometry convergence|-------------------------
+          Item                value                   Tolerance       Converged
+          ---------------------------------------------------------------------
+          Energy change      -0.0000012345            0.0000050000      NO 
+          RMS gradient        0.0000456789            0.0001000000      NO 
+          MAX gradient        0.0001234567            0.0003000000      NO 
+          RMS step            0.0004567890            0.0020000000      NO 
+          MAX step            0.0012345678            0.0040000000      NO 
+          ........................................................
+          Max(Bonds)      0.0003      Max(Angles)    0.05
+          Max(Dihed)        0.08      Max(Improp)    0.00
+          ---------------------------------------------------------------------
+
+                         *************************************************************
+                         *                GEOMETRY OPTIMIZATION CYCLE   2            *
+                         *************************************************************
+
+---------------------------------
+CARTESIAN COORDINATES (ANGSTROEM)
+---------------------------------
+  C     -0.781277    0.127126    0.000113
+  C     -1.367210    1.322297    0.000057
+  C     -1.514038   -1.175010   -0.000144
+  C      0.700037    0.066876    0.000171
+  O      1.430055    1.042541   -0.000201
+  O      1.179345   -1.169207    0.000108
+  H      2.155159   -1.187785   -0.000525
+  H     -2.436975    1.430270   -0.000599
+  H     -0.772793    2.220332    0.000760
+  H     -2.585705   -1.004974   -0.000671
+  H     -1.239588   -1.756875    0.877297
+  H     -1.238697   -1.757187   -0.877130
+
+--------------
+SCF ITERATIONS
+--------------
+  ITER       Energy         Delta-E        Max-DP      RMS-DP      [F,P]     Damp
+    0   -306.3878102221   0.000000000000 0.00241210  0.00005124  0.0031412 0.7000
+    1   -306.3881002221  -0.000290000000 0.00042110  0.00000924  0.0004121 0.0000
+    2   -306.3881102221  -0.000010000000 0.00002110  0.00000044  0.0000201 0.0000
+
+               *****************************************************
+               *                     SUCCESS                       *
+               *           SCF CONVERGED AFTER   6 CYCLES          *
+               *****************************************************
+
+----------------
+TOTAL SCF ENERGY
+----------------
+
+Total Energy       :         -306.38811022 Eh           -8337.24513 eV
+CPCM Dielectric    :           -0.01102291 Eh              -0.29995 eV
+
+-------
+DFT-D4
+-------
+Dispersion correction           -0.004810227
+gCP correction             0.004701109
+
+-------------------------   --------------------
+FINAL SINGLE POINT ENERGY      -306.388219340112
+-------------------------   --------------------
+
+                            .--------------------.
+          ----------------------|Geometry convergence|-------------------------
+          Item                value                   Tolerance       Converged
+          ---------------------------------------------------------------------
+          Energy change      -0.0000012345            0.0000050000      NO 
+          RMS gradient        0.0000456789            0.0001000000      NO 
+          MAX gradient        0.0001234567            0.0003000000      NO 
+          RMS step            0.0004567890            0.0020000000      NO 
+          MAX step            0.0012345678            0.0040000000      NO 
+          ........................................................
+          Max(Bonds)      0.0003      Max(Angles)    0.05
+          Max(Dihed)        0.08      Max(Improp)    0.00
+          ---------------------------------------------------------------------
+
+                         *************************************************************
+                         *                GEOMETRY OPTIMIZATION CYCLE   3            *
+                         *************************************************************
+
+---------------------------------
+CARTESIAN COORDINATES (ANGSTROEM)
+---------------------------------
+  C     -0.781277    0.127126    0.000113
+  C     -1.367210    1.322297    0.000057
+  C     -1.514038   -1.175010   -0.000144
+  C      0.700037    0.066876    0.000171
+  O      1.430055    1.042541   -0.000201
+  O      1.179345   -1.169207    0.000108
+  H      2.155159   -1.187785   -0.000525
+  H     -2.436975    1.430270   -0.000599
+  H     -0.772793    2.220332    0.000760
+  H     -2.585705   -1.004974   -0.000671
+  H     -1.239588   -1.756875    0.877297
+  H     -1.238697   -1.757187   -0.877130
+
+--------------
+SCF ITERATIONS
+--------------
+  ITER       Energy         Delta-E        Max-DP      RMS-DP      [F,P]     Damp
+    0   -306.3878320877   0.000000000000 0.00241210  0.00005124  0.0031412 0.7000
+    1   -306.3881220877  -0.000290000000 0.00042110  0.00000924  0.0004121 0.0000
+    2   -306.3881320877  -0.000010000000 0.00002110  0.00000044  0.0000201 0.0000
+
+               *****************************************************
+               *                     SUCCESS                       *
+               *           SCF CONVERGED AFTER   6 CYCLES          *
+               *****************************************************
+
+----------------
+TOTAL SCF ENERGY
+----------------
+
+Total Energy       :         -306.38813209 Eh           -8337.24573 eV
+CPCM Dielectric    :           -0.01102291 Eh              -0.29995 eV
+
+-------
+DFT-D4
+-------
+Dispersion correction           -0.004810227
+gCP correction             0.004701109
+
+-------------------------   --------------------
+FINAL SINGLE POINT ENERGY      -306.388241205718
+-------------------------   --------------------
+
+                            .--------------------.
+          ----------------------|Geometry convergence|-------------------------
+          Item                value                   Tolerance       Converged
+          ---------------------------------------------------------------------
+          Energy change      -0.0000012345            0.0000050000      YES
+          RMS gradient        0.0000456789            0.0001000000      YES
+          MAX gradient        0.0001234567            0.0003000000      YES
+          RMS step            0.0004567890            0.0020000000      YES
+          MAX step            0.0012345678            0.0040000000      YES
+          ........................................................
+          Max(Bonds)      0.0003      Max(Angles)    0.05
+          Max(Dihed)        0.08      Max(Improp)    0.00
+          ---------------------------------------------------------------------
+
+                    ***********************HURRAY********************
+                    ***        THE OPTIMIZATION HAS CONVERGED     ***
+                    *************************************************
+
+                ---------------------------------------------------
+                Final redundant internal coordinates are not shown
+                ---------------------------------------------------
+
+                       *** OPTIMIZATION RUN DONE ***
+
+     *************************************************************
+     *       *** FINAL ENERGY EVALUATION AT THE STATIONARY POINT ***       *
+     *************************************************************
+
+---------------------------------
+CARTESIAN COORDINATES (ANGSTROEM)
+---------------------------------
+  C     -0.781277    0.127126    0.000113
+  C     -1.367210    1.322297    0.000057
+  C     -1.514038   -1.175010   -0.000144
+  C      0.700037    0.066876    0.000171
+  O      1.430055    1.042541   -0.000201
+  O      1.179345   -1.169207    0.000108
+  H      2.155159   -1.187785   -0.000525
+  H     -2.436975    1.430270   -0.000599
+  H     -0.772793    2.220332    0.000760
+  H     -2.585705   -1.004974   -0.000671
+  H     -1.239588   -1.756875    0.877297
+  H     -1.238697   -1.757187   -0.877130
+
+--------------
+SCF ITERATIONS
+--------------
+  ITER       Energy         Delta-E        Max-DP      RMS-DP      [F,P]     Damp
+    0   -306.3878321089   0.000000000000 0.00241210  0.00005124  0.0031412 0.7000
+    1   -306.3881221089  -0.000290000000 0.00042110  0.00000924  0.0004121 0.0000
+    2   -306.3881321089  -0.000010000000 0.00002110  0.00000044  0.0000201 0.0000
+
+               *****************************************************
+               *                     SUCCESS                       *
+               *           SCF CONVERGED AFTER   3 CYCLES          *
+               *****************************************************
+
+----------------
+TOTAL SCF ENERGY
+----------------
+
+Total Energy       :         -306.38813211 Eh           -8337.24573 eV
+CPCM Dielectric    :           -0.01102291 Eh              -0.29995 eV
+
+-------
+DFT-D4
+-------
+Dispersion correction           -0.004810227
+gCP correction             0.004701109
+
+-------------------------   --------------------
+FINAL SINGLE POINT ENERGY      -306.388241226941
+-------------------------   --------------------
+
+----------------------------------------------------------------------------
+                           ORCA SCF HESSIAN
+----------------------------------------------------------------------------
+
+Hessian of the Kohn-Sham DFT energy
+     (CPCM contribution included)
+
+-----------------------
+VIBRATIONAL FREQUENCIES
+-----------------------
+
+Scaling factor for frequencies =  1.000000000  (already applied!)
+
+     0:         0.00 cm**-1
+     1:         0.00 cm**-1
+     2:         0.00 cm**-1
+     3:         0.00 cm**-1
+     4:         0.00 cm**-1
+     5:         0.00 cm**-1
+     6:       -38.17 cm**-1 ***imaginary mode***
+     7:       162.48 cm**-1
+     8:       248.95 cm**-1
+     9:       314.06 cm**-1
+    10:       382.77 cm**-1
+    11:       512.40 cm**-1
+    12:       578.63 cm**-1
+    13:       647.18 cm**-1
+    14:       693.40 cm**-1
+    15:       798.20 cm**-1
+    16:       812.53 cm**-1
+    17:       932.71 cm**-1
+    18:       961.88 cm**-1
+    19:      1012.55 cm**-1
+    20:      1062.31 cm**-1
+    21:      1158.92 cm**-1
+    22:      1215.77 cm**-1
+    23:      1283.04 cm**-1
+    24:      1339.86 cm**-1
+    25:      1399.12 cm**-1
+    26:      1440.97 cm**-1
+    27:      1459.08 cm**-1
+    28:      1657.23 cm**-1
+    29:      1718.66 cm**-1
+    30:      3021.47 cm**-1
+    31:      3082.19 cm**-1
+    32:      3110.40 cm**-1
+    33:      3141.55 cm**-1
+    34:      3221.76 cm**-1
+    35:      3709.33 cm**-1
+
+
+------------
+NORMAL MODES
+------------
+
+These modes are the Cartesian displacements weighted by the diagonal matrix
+M(i,i)=1/sqrt(m[i]) where m[i] is the mass of the displaced atom
+Thus, these vectors are normalized but *not* orthogonal
+
+ [HAND-MADE FIXTURE: normal mode matrix omitted]
+
+-----------
+IR SPECTRUM
+-----------
+
+ Mode   freq       eps      Int      T**2         TX        TY        TZ
+       cm**-1   L/(mol*cm) km/mol    a.u.
+----------------------------------------------------------------------------
+  7:    162.48   0.000412    2.08  0.000793  ( 0.000000  0.000000 -0.028161)
+ 26:   1718.66   0.071220  359.92  0.012932  (-0.081203 -0.079211  0.000003)
+ 35:   3709.33   0.021870  110.52  0.001840  ( 0.042866 -0.002116  0.000001)
+
+--------------------------
+THERMOCHEMISTRY AT 298.15K
+--------------------------
+
+Temperature         ...   298.15 K
+Pressure            ...     1.00 atm
+Total Mass          ...    86.09 AMU
+
+Throughout the following assumptions are being made:
+  (1) The electronic state is orbitally nondegenerate
+  (2) There are no thermally accessible electronically excited states
+  (3) Hindered rotations indicated by low frequency modes are not
+      treated as such but are treated as vibrations and this may
+      cause some error
+  (4) All equations used are the standard statistical mechanics
+      equations for an ideal gas
+  (5) All vibrations are strictly harmonic
+
+
+------------
+INNER ENERGY
+------------
+
+The inner energy is: U= E(el) + E(ZPE) + E(vib) + E(rot) + E(trans)
+     E(el)   - is the total energy from the electronic structure calculation
+              = E(kin-el) + E(nuc-el) + E(el-el) + E(nuc-nuc)
+     E(ZPE)  - the the zero temperature vibrational energy from the frequency calculation
+     E(vib)  - the the finite temperature correction to E(ZPE) due to population
+              of excited vibrational states
+     E(rot)  - is the rotational thermal energy
+     E(trans)- is the translational thermal energy
+
+Summary of contributions to the inner energy U:
+Electronic energy                ...   -306.38824123 Eh
+Zero point energy                ...      0.09541234 Eh      59.87 kcal/mol
+Thermal vibrational correction   ...      0.00412345 Eh       2.59 kcal/mol
+Thermal rotational correction    ...      0.00141627 Eh       0.89 kcal/mol
+Thermal translational correction ...      0.00141627 Eh       0.89 kcal/mol
+-----------------------------------------------------------------------
+Total thermal energy                   -306.28587290 Eh
+
+Summary of corrections to the electronic energy:
+(perhaps to be used in another calculation)
+Total thermal correction                  0.00695599 Eh       4.36 kcal/mol
+Non-thermal (ZPE) correction              0.09541234 Eh      59.87 kcal/mol
+-----------------------------------------------------------------------
+Total correction                          0.10236833 Eh      64.24 kcal/mol
+
+--------
+ENTHALPY
+--------
+
+The enthalpy is H = U + kB*T
+                kB*T =       0.00094421 Eh       0.59 kcal/mol
+
+Thermal Enthalpy correction       ...      0.00094421 Eh       0.59 kcal/mol
+-----------------------------------------------------------------------
+Total Enthalpy                    ...   -306.28492869 Eh
+
+-------
+ENTROPY
+-------
+
+The entropy contributions are T*S = T*(S(el)+S(vib)+S(rot)+S(trans))
+     S(el)   - electronic entropy
+     S(vib)  - vibrational entropy
+     S(rot)  - rotational entropy
+     S(trans)- translational entropy
+The entropies will be listed as multiplied by the temperature to get
+units of energy
+
+Electronic entropy                ...      0.00000000 Eh      0.00 kcal/mol
+Vibrational entropy               ...      0.00721234 Eh      4.53 kcal/mol
+Rotational entropy                ...      0.01112345 Eh      6.98 kcal/mol
+Translational entropy             ...      0.01823456 Eh     11.44 kcal/mol
+-----------------------------------------------------------------------
+Final entropy term                ...      0.03657035 Eh     22.95 kcal/mol
+
+-------------------
+GIBBS FREE ENERGY
+-------------------
+
+The Gibbs free energy is G = H - T*S
+
+Total enthalpy                    ...   -306.28492869 Eh
+Total entropy correction          ...     -0.03657035 Eh    -22.95 kcal/mol
+-----------------------------------------------------------------------
+Final Gibbs free energy         ...   -306.32149904 Eh
+
+For completeness - the Gibbs free energy minus the electronic energy
+G-E(el)                           ...      0.06674219 Eh     41.88 kcal/mol
+
+
+Timings for individual modules:
+
+Sum of individual times         ...      612.884 sec (=  10.215 min)
+Geometry relaxation             ...        1.212 sec (=   0.020 min)   0.2 %
+Analytical frequency calculation...      402.774 sec (=   6.713 min)  65.7 %
+                             ****ORCA TERMINATED NORMALLY****
+TOTAL RUN TIME: 0 days 0 hours 10 minutes 13 seconds 127 msec
