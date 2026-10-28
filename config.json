@@ -1,0 +1,84 @@
+{
+  "crest": "crest",
+  "orca": "/opt/orca/orca",
+  "nprocs": 8,
+  "maxcore": 3000,
+  "temperature": 298.15,
+
+  "solvent_xtb": "acetonitrile",
+  "solvent_orca": "acetonitrile",
+
+  "crest_ewin": 10.0,
+  "sp_window": 10.0,
+  "opt_window": 4.0,
+  "opt_max": 30,
+  "dedupe_kcal": 0.05,
+
+  "methods": {
+    "screen": "r2SCAN-3c",
+    "high": "wB97M-V def2-TZVP def2/J RIJCOSX"
+  },
+
+  "species": {
+    "MAA": {
+      "nci": false,
+      "variants": {
+        "neutral": {"xyz": "inputs/MAA/neutral.xyz", "charge": 0, "mult": 1}
+      }
+    },
+    "histamine": {
+      "nci": false,
+      "variants": {
+        "tau": {"xyz": "inputs/histamine/tau.xyz", "charge": 0, "mult": 1},
+        "pi":  {"xyz": "inputs/histamine/pi.xyz",  "charge": 0, "mult": 1}
+      }
+    },
+    "histidine": {
+      "nci": false,
+      "variants": {
+        "neutral_tau":    {"xyz": "inputs/histidine/neutral_tau.xyz",    "charge": 0, "mult": 1},
+        "zwitterion_tau": {"xyz": "inputs/histidine/zwitterion_tau.xyz", "charge": 0, "mult": 1}
+      }
+    },
+    "histamine_MAA1": {
+      "nci": true,
+      "variants": {
+        "hbond_tau":   {"xyz": "inputs/histamine_MAA1/hbond_tau.xyz",   "charge": 0, "mult": 1},
+        "hbond_pi":    {"xyz": "inputs/histamine_MAA1/hbond_pi.xyz",    "charge": 0, "mult": 1},
+        "ionpair_tau": {"xyz": "inputs/histamine_MAA1/ionpair_tau.xyz", "charge": 0, "mult": 1}
+      }
+    },
+    "histamine_MAA2": {
+      "nci": true,
+      "variants": {
+        "hbond_tau":   {"xyz": "inputs/histamine_MAA2/hbond_tau.xyz",   "charge": 0, "mult": 1},
+        "ionpair_tau": {"xyz": "inputs/histamine_MAA2/ionpair_tau.xyz", "charge": 0, "mult": 1}
+      }
+    },
+    "histamine_MAA4": {
+      "nci": true,
+      "variants": {
+        "hbond_tau":   {"xyz": "inputs/histamine_MAA4/hbond_tau.xyz",   "charge": 0, "mult": 1},
+        "ionpair_tau": {"xyz": "inputs/histamine_MAA4/ionpair_tau.xyz", "charge": 0, "mult": 1}
+      }
+    },
+    "histidine_MAA1": {
+      "nci": true,
+      "variants": {
+        "hbond_tau":      {"xyz": "inputs/histidine_MAA1/hbond_tau.xyz",      "charge": 0, "mult": 1},
+        "zwitterion_tau": {"xyz": "inputs/histidine_MAA1/zwitterion_tau.xyz", "charge": 0, "mult": 1}
+      }
+    }
+  },
+
+  "bindings": [
+    {"name": "histamine 1:1", "complex": "histamine_MAA1", "parts": {"histamine": 1, "MAA": 1}},
+    {"name": "histamine 1:2", "complex": "histamine_MAA2", "parts": {"histamine": 1, "MAA": 2}},
+    {"name": "histamine 1:4", "complex": "histamine_MAA4", "parts": {"histamine": 1, "MAA": 4}},
+    {"name": "histidine 1:1", "complex": "histidine_MAA1", "parts": {"histidine": 1, "MAA": 1}}
+  ],
+
+  "selectivity": [
+    ["histamine 1:1", "histidine 1:1"]
+  ]
+}
