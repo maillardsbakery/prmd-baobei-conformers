@@ -1,0 +1,15 @@
+#!/usr/bin/env python3
+"""Play scheduler: run every pending task recorded by fake sbatch, in order."""
+import json
+import os
+import subprocess
+from pathlib import Path
+
+state = Path(os.environ.get("FAKE_SLURM_STATE", ".fake_slurm"))
+for f in sorted(state.glob("*.json")):
+    job = json.loads(f.read_text())
+    while job["pending"]:
+        t = job["pending"].pop(0)
+        f.write_text(json.dumps(job))
+        env = {**os.environ, "SLURM_ARRAY_JOB_ID": f.stem, "SLURM_ARRAY_TASK_ID": str(t)}
+        subprocess.run(["bash", job["script"]], env=env)

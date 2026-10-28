@@ -1,0 +1,119 @@
+
+                                 *****************
+                                 * O   R   C   A *
+                                 *****************
+
+                  #######################################################
+                  #                        -***-                        #
+                  #          Department of theory and spectroscopy      #
+                  #                                                     #
+                  #                      Frank Neese                    #
+                  #                                                     #
+                  #        Max Planck Institute fuer Kohlenforschung    #
+                  #                Kaiser Wilhelm Platz 1               #
+                  #                 D-45470 Muelheim/Ruhr               #
+                  #                      Germany                        #
+                  #                                                     #
+                  #                  All rights reserved                #
+                  #                        -***-                        #
+                  #######################################################
+
+
+                         Program Version 6.0.1 -  RELEASE  -
+
+
+ [HAND-MADE FIXTURE: abbreviated ORCA 6 single point whose SCF did not converge. Sections not read by
+  pipeline.py are shortened. See tests/fixtures/README.md.]
+
+
+================================================================================
+
+----- Orbital basis set information -----
+Your calculation utilizes the basis: def2-mTZVPP
+----- AuxJ basis set information -----
+Your calculation utilizes the auxiliary basis: def2-mTZVPP/J
+
+================================================================================
+                                       INPUT FILE
+================================================================================
+NAME = sp.inp
+|  1> ! r2SCAN-3c CPCM(water) TightSCF
+|  2> %pal nprocs 8 end
+|  3> %maxcore 3000
+|  4> * xyzfile 0 1 conf.xyz
+|  5> 
+|  6>                          ****END OF INPUT****
+================================================================================
+
+                       ****************************
+                       * Single Point Calculation *
+                       ****************************
+
+---------------------------------
+CARTESIAN COORDINATES (ANGSTROEM)
+---------------------------------
+  C     -0.781277    0.127126    0.000113
+  C     -1.367210    1.322297    0.000057
+  C     -1.514038   -1.175010   -0.000144
+  C      0.700037    0.066876    0.000171
+  O      1.430055    1.042541   -0.000201
+  O      1.179345   -1.169207    0.000108
+  H      2.155159   -1.187785   -0.000525
+  H     -2.436975    1.430270   -0.000599
+  H     -0.772793    2.220332    0.000760
+  H     -2.585705   -1.004974   -0.000671
+  H     -1.239588   -1.756875    0.877297
+  H     -1.238697   -1.757187   -0.877130
+
+-------------------------------------------------------------------------------
+                          ORCA SCF
+-------------------------------------------------------------------------------
+
+------------
+SCF SETTINGS
+------------
+Hamiltonian:
+ Density Functional     Method          .... DFT(GTOs)
+ Exchange Functional    Exchange        .... R2SCAN
+ Correlation Functional Correlation     .... R2SCAN
+ Gradients option       PostSCFGGA      .... off
+ RI-approximation to the Coulomb term is turned on
+   Number of AuxJ basis functions       .... 352
+
+
+--------------------------------
+CPCM SOLVATION MODEL
+--------------------------------
+CPCM parameters:
+  Epsilon                                         ...      80.4000
+  Refrac                                          ...       1.3300
+  Rsolv                                           ...       1.3000
+  Surface type                                    ...    GAUSSIAN VDW
+  Epsilon function type                           ...         CPCM
+Solvent:                                     ... WATER
+
+--------------
+--------------
+SCF ITERATIONS
+--------------
+  ITER       Energy         Delta-E        Max-DP      RMS-DP      [F,P]     Damp
+    0   -306.2811734712   0.000000000000 0.04732812  0.00105912  0.1729414 0.7000
+    1   -306.1496158247   0.131557646465 0.13130128  0.00268517  0.3927147 0.7000
+    2   -306.3242155316  -0.174599706852 0.10788410  0.00213275  0.2383817 0.7000
+  ...
+  124   -306.3011873412   0.018731220190 0.04131209  0.00091201  0.0812411 0.7000
+
+               *****************************************************
+               *                      ERROR                        *
+               *           SCF NOT CONVERGED AFTER 125 CYCLES      *
+               *****************************************************
+
+
+ This wavefunction IS NOT CONVERGED! 
+ Please do not use this wavefunction for any property calculations!
+
+ORCA finished by error termination in SCF
+Calling Command: /opt/orca/orca_scf_mpi sp.gbw b sp
+[file orca_tools/qcmsg.cpp, line 394]: 
+  .... aborting the run
+

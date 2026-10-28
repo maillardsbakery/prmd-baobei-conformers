@@ -1,0 +1,71 @@
+#!/usr/bin/env python3
+"""Fake CREST 3 for dry runs of pipeline.py.
+
+Reads start.xyz, writes crest_conformers.xyz, crest_best.xyz and crest.energies
+in the format of the genuine CREST 3.0.2 output under
+tests/fixtures/crest3/maa_water_full/, and prints that run's log with this
+command line spliced in. Energies are made up but deterministic.
+
+FAKE_CREST_FAIL=<substring>: if the working directory contains it, print the
+log header and exit 1 without writing conformers.
+"""
+import hashlib
+import os
+import random
+import sys
+from pathlib import Path
+
+FIXTURES = Path(__file__).resolve().parent.parent / "fixtures" / "crest3" / "maa_water_full"
+# rough GFN2-xTB energy per atom (Eh); only the sums matter here
+ATOM_E = {"H": -0.39, "C": -1.84, "N": -2.93, "O": -4.36, "S": -3.95}
+OFFSETS_KCAL = [0.0, 0.42, 1.31, 2.87, 4.62, 7.80, 11.5, 14.2]
+
+
+def main():
+    args = sys.argv[1:]
+    if not args or args[0] in ("--version", "-v"):
+        print(" crest 3.0.2 (fake)")
+        return 0
+    xyz = Path(args[0])
+    log = (FIXTURES / "crest.log").read_text().splitlines()
+    head = log[:log.index(" Command line input:") + 1]
+    print("\n".join(head))
+    print(" $ crest " + " ".join(args))
+    print(" [FAKE CREST: tests/fake_bin/crest, not a real conformer search]\n")
+    fail = os.environ.get("FAKE_CREST_FAIL")
+    if fail and fail in os.getcwd():
+        print("\n abnormal termination of crest (FAKE_CREST_FAIL)")
+        return 1
+
+    lines = xyz.read_text().splitlines()
+    n = int(lines[0].split()[0])
+    atoms = [l.split()[:4] for l in lines[2:2 + n]]
+    parts = Path.cwd().parts          # seed from work/<species>/<variant>, not the full path
+    i = len(parts) - 1 - parts[::-1].index("work") if "work" in parts else 0
+    key = "/".join(parts[i:])
+    seed = int(hashlib.sha1(key.encode()).hexdigest()[:8], 16)
+    rng = random.Random(seed)
+    base = sum(ATOM_E.get(a[0].capitalize(), -2.0) for a in atoms) + rng.uniform(-0.05, 0.05)
+    nconf = 3 + seed % 6                  # 3..8 conformers, the last ones above 10 kcal/mol
+    offsets = OFFSETS_KCAL[:nconf]
+    blocks, energies = [], []
+    for k, off in enumerate(offsets):
+        e = base + off / 627.509474
+        body = []
+        for el, x, y, z in atoms:
+            body.append(f" {el.capitalize():<2}{float(x) + rng.uniform(-0.3, 0.3):20.10f}"
+                        f"{float(y) + rng.uniform(-0.3, 0.3):20.10f}"
+                        f"{float(z) + rng.uniform(-0.3, 0.3):20.10f}")
+        blocks.append(f"  {n}\n        {e:.8f}\n" + "\n".join(body) + "\n")
+        energies.append(f"{k + 1:>3}{off:>14.3f}")
+    Path("crest_conformers.xyz").write_text("".join(blocks))
+    Path("crest_best.xyz").write_text(blocks[0])
+    Path("crest.energies").write_text("\n".join(energies) + "\n")
+    tail = log[next(i for i, l in enumerate(log) if "Wall Time Summary" in l) - 1:]
+    print(f" number of unique conformers for further calc{nconf:>12}")
+    print("\n".join(tail))
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

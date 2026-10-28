@@ -1,0 +1,189 @@
+
+                                 *****************
+                                 * O   R   C   A *
+                                 *****************
+
+                  #######################################################
+                  #                        -***-                        #
+                  #          Department of theory and spectroscopy      #
+                  #                                                     #
+                  #                      Frank Neese                    #
+                  #                                                     #
+                  #        Max Planck Institute fuer Kohlenforschung    #
+                  #                Kaiser Wilhelm Platz 1               #
+                  #                 D-45470 Muelheim/Ruhr               #
+                  #                      Germany                        #
+                  #                                                     #
+                  #                  All rights reserved                #
+                  #                        -***-                        #
+                  #######################################################
+
+
+                         Program Version 6.0.1 -  RELEASE  -
+
+
+ [HAND-MADE FIXTURE: abbreviated ORCA 6 wB97M-V single point (vertical radical cation, extras stage). Sections not read by
+  pipeline.py are shortened. See tests/fixtures/README.md.]
+
+
+================================================================================
+
+----- Orbital basis set information -----
+Your calculation utilizes the basis: def2-TZVP
+----- AuxJ basis set information -----
+Your calculation utilizes the auxiliary basis: def2/J
+
+================================================================================
+                                       INPUT FILE
+================================================================================
+NAME = cation.inp
+|  1> ! wB97M-V def2-TZVP def2/J RIJCOSX CPCM(water) TightSCF
+|  2> %pal nprocs 8 end
+|  3> %maxcore 3000
+|  4> * xyzfile 1 2 geom.xyz
+|  5> 
+|  6>                          ****END OF INPUT****
+================================================================================
+
+                       ****************************
+                       * Single Point Calculation *
+                       ****************************
+
+---------------------------------
+CARTESIAN COORDINATES (ANGSTROEM)
+---------------------------------
+  C     -0.781277    0.127126    0.000113
+  C     -1.367210    1.322297    0.000057
+  C     -1.514038   -1.175010   -0.000144
+  C      0.700037    0.066876    0.000171
+  O      1.430055    1.042541   -0.000201
+  O      1.179345   -1.169207    0.000108
+  H      2.155159   -1.187785   -0.000525
+  H     -2.436975    1.430270   -0.000599
+  H     -0.772793    2.220332    0.000760
+  H     -2.585705   -1.004974   -0.000671
+  H     -1.239588   -1.756875    0.877297
+  H     -1.238697   -1.757187   -0.877130
+
+-------------------------------------------------------------------------------
+                          ORCA SCF
+-------------------------------------------------------------------------------
+
+------------
+SCF SETTINGS
+------------
+Hamiltonian:
+ Density Functional     Method          .... DFT(GTOs)
+ Exchange Functional    Exchange        .... WB97M-V
+ Correlation Functional Correlation     .... WB97M-V
+ NL short-range parameter              ....  6.000000
+ RIJCOSX approximation is turned on
+ Gradients option       PostSCFGGA      .... off
+ RI-approximation to the Coulomb term is turned on
+   Number of AuxJ basis functions       .... 352
+
+
+--------------------------------
+CPCM SOLVATION MODEL
+--------------------------------
+CPCM parameters:
+  Epsilon                                         ...      80.4000
+  Refrac                                          ...       1.3300
+  Rsolv                                           ...       1.3000
+  Surface type                                    ...    GAUSSIAN VDW
+  Epsilon function type                           ...         CPCM
+Solvent:                                     ... WATER
+
+--------------
+SCF ITERATIONS
+--------------
+               ***  Starting incremental Fock matrix formation  ***
+                      *** Initializing SOSCF ***
+                      *** Constrained CPCM-SCF ***
+  ITER       Energy         Delta-E        Max-DP      RMS-DP      [F,P]     Damp
+    0   -306.1332799182   0.000000000000 0.04732812  0.00105912  0.1729414 0.7000
+    1   -306.2016799182  -0.068442353456 0.03130128  0.00068517  0.0927147 0.7000
+    2   -306.2259799182  -0.024599706852 0.04788410  0.00113275  0.0383817 0.0000
+    3   -306.2383599182  -0.012396577573 0.00841123  0.00019841  0.0068412 0.0000
+    4   -306.2399499182  -0.001329073770 0.00172410  0.00004520  0.0021103 0.0000
+    5   -306.2400725182  -0.000074244117 0.00069818  0.00001438  0.0005117 0.0000
+    6   -306.2400797182  -0.000005763460 0.00012514  0.00000312  0.0000784 0.0000
+    7   -306.2400799099  -0.000000196729 0.00003105  0.00000072  0.0000193 0.0000
+    8   -306.2400799182  -0.000000008299 0.00000641  0.00000013  0.0000039 0.0000
+                 **** Energy Check signals convergence ****
+
+               *****************************************************
+               *                     SUCCESS                       *
+               *           SCF CONVERGED AFTER   9 CYCLES          *
+               *****************************************************
+
+
+----------------
+TOTAL SCF ENERGY
+----------------
+
+Total Energy       :         -306.24007992 Eh           -8333.21702 eV
+
+Components:
+Nuclear Repulsion  :          242.39071834 Eh            6595.78155 eV
+Electronic Energy  :         -548.77873974 Eh          -14933.03026 eV
+One Electron Energy:         -904.75380133 Eh          -24619.62271 eV
+Two Electron Energy:          355.97506159 Eh            9686.59245 eV
+CPCM Dielectric    :           -0.01103728 Eh              -0.30034 eV
+
+Virial components:
+Potential Energy   :         -611.91716230 Eh          -16651.08918 eV
+Kinetic Energy     :          305.52914090 Eh            8313.84047 eV
+Virial Ratio       :            2.00281111
+
+
+DFT components:
+N(Alpha)           :       23.000003911020 electrons
+N(Beta)            :       22.000003602113 electrons
+N(Total)           :       45.000007513133 electrons
+E(X)               :      -32.98018217 Eh       
+E(C)               :       -1.27160114 Eh       
+E(XC)              :      -34.25178331 Eh       
+DFET-embed. en.    :        0.00000000 Eh       
+
+----------------------
+UHF SPIN CONTAMINATION
+----------------------
+
+Expectation value of <S**2>     :     0.757820
+Ideal value S*(S+1) for S=0.5   :     0.750000
+Deviation                       :     0.007820
+
+-------------------------   --------------------
+FINAL SINGLE POINT ENERGY      -306.240079918204
+-------------------------   --------------------
+
+
+                            ***************************************
+                            *     ORCA property calculations      *
+                            ***************************************
+
+------------------------------------------------------------------------------
+                          ORCA POPULATION ANALYSIS
+------------------------------------------------------------------------------
+
+-------------
+DIPOLE MOMENT
+-------------
+                                X             Y             Z
+Electronic contribution:     -3.21410      -1.02213       0.00021
+Nuclear contribution   :      3.98172       1.64019      -0.00031
+                        -----------------------------------------
+Total Dipole Moment    :      0.76762       0.61806      -0.00010
+                        -----------------------------------------
+Magnitude (a.u.)       :      0.98552
+Magnitude (Debye)      :      2.50500
+
+
+Timings for individual modules:
+
+Sum of individual times         ...       14.219 sec (=   0.237 min)
+GTO integral calculation        ...        0.512 sec (=   0.009 min)   3.6 %
+SCF iterations                  ...       13.707 sec (=   0.228 min)  96.4 %
+                             ****ORCA TERMINATED NORMALLY****
+TOTAL RUN TIME: 0 days 0 hours 0 minutes 3 minutes 41 seconds 208 msec
